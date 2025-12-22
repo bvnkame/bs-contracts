@@ -1,0 +1,276 @@
+{
+	"compiler": {
+		"version": "0.8.24+commit.e11b9ed9"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "string",
+						"name": "enclaveId",
+						"type": "string"
+					}
+				],
+				"name": "EnclaveDeleted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "string",
+						"name": "enclaveId",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "connectURL",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "pubkey",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "version",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "EnclaveRegistered",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "string",
+						"name": "enclaveId",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "connectURL",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "pubkey",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "version",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "EnclaveUpdated",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "enclaveId",
+						"type": "string"
+					}
+				],
+				"name": "deleteEnclave",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAllEnclaves",
+				"outputs": [
+					{
+						"internalType": "string[]",
+						"name": "ids",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "urls",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "pubkeys",
+						"type": "string[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "versions",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "timestamps",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "enclaveId",
+						"type": "string"
+					}
+				],
+				"name": "getEnclave",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "connectURL",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "pubkey",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "version",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "updatedAt",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "listEnclaveIds",
+				"outputs": [
+					{
+						"internalType": "string[]",
+						"name": "",
+						"type": "string[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "enclaveId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "connectURL",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "pubkey",
+						"type": "string"
+					}
+				],
+				"name": "registerEnclave",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "enclaveId",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "newConnectURL",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "newPubkey",
+						"type": "string"
+					}
+				],
+				"name": "updateEnclave",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"getAllEnclaves()": {
+					"notice": "✅ New function: get all enclaves in one call (for frontend)"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/enclavecontract.sol": "EnclaveRegistry"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/enclavecontract.sol": {
+			"keccak256": "0x3f703df9f857e6e97c96123a0c09c50d4c23f5f81f75c350b4087f3bf8c7f2a1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://09ab4b6fd894bbe86a744aa0d485e88de18a5eb5121a7190d4f07a7bdc514b0f",
+				"dweb:/ipfs/QmVeSWNpEmpvKxQ5nhiREaL1rJ8MzW2ea6V2L7B4kW5yde"
+			]
+		}
+	},
+	"version": 1
+}
