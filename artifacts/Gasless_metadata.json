@@ -1,0 +1,332 @@
+{
+	"compiler": {
+		"version": "0.8.24+commit.e11b9ed9"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "len",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "offset",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "need",
+						"type": "uint256"
+					}
+				],
+				"name": "CBOR_Error_BufferOverrun",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "byteLength",
+						"type": "uint256"
+					}
+				],
+				"name": "CBOR_Error_BytesTooLong",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "CBOR_InvalidKey",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "CBOR_InvalidLength",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "CBOR_InvalidMap",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"name": "CBOR_InvalidUintPrefix",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"name": "CBOR_InvalidUintSize",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64",
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"name": "CoreCallDataPublicKeyError",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "DER_Split_Error",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "SubcallError",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "recoverV_Error",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "innercallAddr",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "innercall",
+						"type": "bytes"
+					}
+				],
+				"name": "makeProxyTx",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "output",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "proxy",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "addr",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "secret",
+								"type": "bytes32"
+							},
+							{
+								"internalType": "uint64",
+								"name": "nonce",
+								"type": "uint64"
+							}
+						],
+						"internalType": "struct EthereumKeypair",
+						"name": "keypair",
+						"type": "tuple"
+					}
+				],
+				"name": "setKeypair",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"errors": {
+				"CBOR_Error_BytesTooLong(uint256)": [
+					{
+						"details": "Solidity has 256bit length prefixes for byte arrays. We decided for      a reasonable cutoff point (64kb), so at most a 2-byte uint describing      the array length."
+					}
+				]
+			},
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"errors": {
+				"CBOR_Error_BufferOverrun(uint256,uint256,uint256)": [
+					{
+						"notice": "Buffer too short to parse expected value"
+					}
+				],
+				"CBOR_Error_BytesTooLong(uint256)": [
+					{
+						"notice": "Byte array is too long"
+					}
+				],
+				"CBOR_InvalidKey()": [
+					{
+						"notice": "While parsing CBOR map, unexpected key"
+					}
+				],
+				"CBOR_InvalidLength(uint256)": [
+					{
+						"notice": "While parsing CBOR structure, data length was unexpected"
+					}
+				],
+				"CBOR_InvalidMap()": [
+					{
+						"notice": "While parsing CBOR map, length is invalid, or other parse error"
+					}
+				],
+				"CBOR_InvalidUintPrefix(uint8)": [
+					{
+						"notice": "Value cannot be parsed as a uint"
+					}
+				],
+				"CBOR_InvalidUintSize(uint8)": [
+					{
+						"notice": "CBOR spec supports, 1, 2, 4 & 8 byte uints. Caused by parse error."
+					}
+				],
+				"CoreCallDataPublicKeyError(uint64)": [
+					{
+						"notice": "Error while trying to retrieve the calldata public key"
+					}
+				],
+				"SubcallError()": [
+					{
+						"notice": "Raised if the underlying subcall precompile does not succeed"
+					}
+				]
+			},
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/BSGaslessContract.sol": "Gasless"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@oasisprotocol/sapphire-contracts/contracts/CBOR.sol": {
+			"keccak256": "0x78431df254fe026f453a50426e14bc3d1b33f125079250601278294c84ef8aaa",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://973727ca08fc3fa631a18ae3c682aea65e0402e1ed33ff1be5e080eaaa3e6303",
+				"dweb:/ipfs/Qmapjaf9atjsCJwWjckmfwtfLtC1tXpdo3tftwR2M8qHM9"
+			]
+		},
+		"@oasisprotocol/sapphire-contracts/contracts/CalldataEncryption.sol": {
+			"keccak256": "0xce4bc8291c46e571153895f4fa7f54e069a5dc04169294e9e9c97a5294b00070",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://269223b54747f0b36f3f31526c5c13139af65496c01d7ab2dfd2207f0b00f302",
+				"dweb:/ipfs/QmNsnibkyxugXzq34E8pkhyY5rUC9JeXHmon8pb5Wvx15x"
+			]
+		},
+		"@oasisprotocol/sapphire-contracts/contracts/ConsensusUtils.sol": {
+			"keccak256": "0x01f87592cfe7b70142571b61a72b73cd276660b6f454a88f9a299e9db75205e1",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://80add4d6da9b3b567b84565cf53b0399b567ace25c2960b09f11cfa930b6991c",
+				"dweb:/ipfs/QmYpQVGqgJEju9MWmbBGikWzDZfWWeT5ueWA33KhGz6mzF"
+			]
+		},
+		"@oasisprotocol/sapphire-contracts/contracts/EIP155Signer.sol": {
+			"keccak256": "0xfcfebf294b0b3933cafcb848eea468b1e23902644021d53bfe13bf6e66c1931e",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://019228f2b65f58b619163fc5a683b581a51da416b05236f3c3a85f95b90269a4",
+				"dweb:/ipfs/QmdNxQi1n9HUCHYfToQXZp4QTSz1U3WarM5zbDQpDezF9h"
+			]
+		},
+		"@oasisprotocol/sapphire-contracts/contracts/EthereumUtils.sol": {
+			"keccak256": "0x79e34844793f4a8970d31eb4cbdd91e060fb93da4cbd28b7b8aad5c22e1f6666",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://f40fdf3c56b34ded8ba2e810e9464eafdd184a29031c5322cb8ff33ca0f4a8ef",
+				"dweb:/ipfs/QmRC1fBpi7yETwN2ZxeDf1ZBgtwRiHWzQ1DYfUJ2jxWkok"
+			]
+		},
+		"@oasisprotocol/sapphire-contracts/contracts/RLPWriter.sol": {
+			"keccak256": "0x96c654e7adda164d1ded40d4179ebc4620d912c81ca961500cac7cce84751bc3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2874fb7fa04d358b9743dc1ab23ea16323390821b6fdd10e9ed0b8c466c8fb11",
+				"dweb:/ipfs/QmQgZ8ectbM42VvWb9UoZksoNky51cozPRLHeibhhmVvqB"
+			]
+		},
+		"@oasisprotocol/sapphire-contracts/contracts/Sapphire.sol": {
+			"keccak256": "0x0775bd7fc9832e9b196ac1c4dc4d512f0d33cacc2cdcfc2a54b558938cfbf618",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://394112b7aa435becaa0ecdabeedc4fa235ce0be53ecd404ed39d2cb8e0c14aa2",
+				"dweb:/ipfs/QmNsGsYjVMpDusgEi9Rik8Tivnt5JDDUcyXg1n37jsY7P2"
+			]
+		},
+		"@oasisprotocol/sapphire-contracts/contracts/Subcall.sol": {
+			"keccak256": "0x7ff1953aa5aa1c033b0394c75300a2b36eaabb2304308e1d6a1719671869aec2",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://9b5c3fd09894d42a76718265b1be201d1e9ffc1968c3e36132c301bb9e407a99",
+				"dweb:/ipfs/QmZLC9rQeGUC2txVQajuGJxf3yTFdp7x6mjX9k2HcQm2Xg"
+			]
+		},
+		"contracts/BSGaslessContract.sol": {
+			"keccak256": "0xde363b196ec905bbb878acfe33f5a4d4058f35be43c07797b8557bdf093a3236",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ebcd6b4d2de2f6eb9aa779ad8604c5cd0efbb55280badca00b7c662ee47150a1",
+				"dweb:/ipfs/QmQVCWDdz6ZJZPqdtQA37DYsy1tw3Kt8YAVot54CFbCAqB"
+			]
+		}
+	},
+	"version": 1
+}
