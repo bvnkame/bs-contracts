@@ -249,7 +249,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/enclavecontract.sol": "EnclaveRegistry"
+			"contracts/BSEnclaveContract.sol": "EnclaveRegistry"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -263,7 +263,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"contracts/enclavecontract.sol": {
+		"contracts/BSEnclaveContract.sol": {
 			"keccak256": "0x3f703df9f857e6e97c96123a0c09c50d4c23f5f81f75c350b4087f3bf8c7f2a1",
 			"license": "MIT",
 			"urls": [

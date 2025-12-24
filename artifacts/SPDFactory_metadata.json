@@ -1,0 +1,116 @@
+{
+	"compiler": {
+		"version": "0.8.24+commit.e11b9ed9"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "emailHash",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "userContract",
+						"type": "address"
+					}
+				],
+				"name": "UserCreated",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "emailHash",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32[]",
+						"name": "initialPCR0s",
+						"type": "bytes32[]"
+					}
+				],
+				"name": "createUser",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "emailHash",
+						"type": "bytes32"
+					}
+				],
+				"name": "getUser",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/SPDFactory.sol": "SPDFactory"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/BSUserContract.sol": {
+			"keccak256": "0xaa7777a4fe940ca40cb530567f89dac1fbd0b6990e5ecc06278283effe5320bb",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4d8a762c8248c393ade55e3255914e6d7fe83e08322c31ea828904f5f6f663f0",
+				"dweb:/ipfs/QmPM7UjnMEtPZtn9NHD5KTx2LJf6JG8y7yMPvM6mgxUnS8"
+			]
+		},
+		"contracts/SPDFactory.sol": {
+			"keccak256": "0x21b7ae300c36b06e18d6f9729015ed68b06918555880cdb8f6298469f4b4d595",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://cc2961886937525352e20b85175653b2cd8d8191914bc36c8f6a2d62e7bddf71",
+				"dweb:/ipfs/QmQVKygy8HxpGKV7mnSqfDNKaQCBJ5keYwG5jhPWCgovgk"
+			]
+		}
+	},
+	"version": 1
+}
