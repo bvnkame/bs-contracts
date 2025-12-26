@@ -16,6 +16,9 @@ contract UserContract {
 
     bool public initialized;
 
+    event PCR0Added(bytes32 pcr0, address sender);
+    event PCR0Removed(bytes32 pcr0, address sender);
+
     modifier onlyFactory() {
         require(msg.sender == factory, "NOT_FACTORY");
         _;
@@ -27,10 +30,11 @@ contract UserContract {
     }
 
     constructor(
+        address _factory,
         bytes32 _emailHash,
         bytes32[] memory _initialPCR0s
     ) {
-        factory = msg.sender;
+        factory = _factory;
         emailHash = _emailHash;
 
         for (uint i = 0; i < _initialPCR0s.length; i++) {
@@ -47,6 +51,13 @@ contract UserContract {
     function initialize() external onlyFactory {
         require(!initialized, "ALREADY_INIT");
         initialized = true;
+    }
+
+    function addPCR0(bytes32 pcr0) external onlyFactory {
+        require(!allowedPCR0[pcr0], "EXISTS");
+        allowedPCR0[pcr0] = true;
+
+        emit PCR0Added(pcr0, msg.sender);
     }
 
     /// Activate ASK after JWT approval

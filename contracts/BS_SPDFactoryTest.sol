@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
-import "./BSUserContract.sol";
+import "./BS_UserContract.sol";
 
 contract SPDFactory {
     /// emailHash → UserContract
@@ -23,6 +23,7 @@ contract SPDFactory {
         require(users[emailHash] == address(0), "USER_EXISTS");
 
         UserContract uc = new UserContract(
+            address(this),
             emailHash,
             initialPCR0s
         );
