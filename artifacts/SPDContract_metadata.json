@@ -259,7 +259,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/SPDcontract.sol": "SPDContract"
+			"contracts/BS_SPDContract.sol": "SPDContract"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -361,7 +361,7 @@
 				"dweb:/ipfs/QmVUSvooZKEdEdap619tcJjTLcAuH6QBdZqAzWwnAXZAWJ"
 			]
 		},
-		"contracts/SPDcontract.sol": {
+		"contracts/BS_SPDContract.sol": {
 			"keccak256": "0xbee3a9437aa3c1d99705ddeeac8013b3edf0ce4985e8daa15eea637d1612e11c",
 			"license": "MIT",
 			"urls": [

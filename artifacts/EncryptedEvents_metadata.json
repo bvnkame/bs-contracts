@@ -1,0 +1,97 @@
+{
+	"compiler": {
+		"version": "0.8.24+commit.e11b9ed9"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "nonce",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "ciphertext",
+						"type": "bytes"
+					}
+				],
+				"name": "Encrypted",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "key",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes",
+						"name": "text",
+						"type": "bytes"
+					}
+				],
+				"name": "emitEncrypted",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/SapphireEncryptEvent.sol": "EncryptedEvents"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@oasisprotocol/sapphire-contracts/contracts/Sapphire.sol": {
+			"keccak256": "0x0775bd7fc9832e9b196ac1c4dc4d512f0d33cacc2cdcfc2a54b558938cfbf618",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://394112b7aa435becaa0ecdabeedc4fa235ce0be53ecd404ed39d2cb8e0c14aa2",
+				"dweb:/ipfs/QmNsGsYjVMpDusgEi9Rik8Tivnt5JDDUcyXg1n37jsY7P2"
+			]
+		},
+		"contracts/SapphireEncryptEvent.sol": {
+			"keccak256": "0x170b9f89df65de2be648c7f25ca63391e7a6131c8fe4cb89cd73c8b97c5ad1e0",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0c791e25c5d01510fabd5295356047e9f17dc657d008d9bc86edcb459ce66fde",
+				"dweb:/ipfs/QmWpoSL3Nu1m92hRRjzZk18peSASnhYuTu5SycpkrMMybu"
+			]
+		}
+	},
+	"version": 1
+}

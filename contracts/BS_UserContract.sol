@@ -3,11 +3,13 @@ pragma solidity 0.8.24;
 
 contract UserContract {
     address public immutable factory;
+    address public immutable enclave;
     bytes32 public immutable emailHash;
 
     // ASK pubkey currently active
     bytes32 public activeASK;
     uint64  public askExpiry;
+    bytes32 private privateKey;
 
     // Whitelisted enclave PCR0
     mapping(bytes32 => bool) public allowedPCR0;
@@ -16,6 +18,11 @@ contract UserContract {
 
     modifier onlyFactory() {
         require(msg.sender == factory, "NOT_FACTORY");
+        _;
+    }
+
+    modifier onlyEnclave() {
+        require(msg.sender == enclave, "NOT_ENCLAVE");
         _;
     }
 
@@ -29,6 +36,11 @@ contract UserContract {
         for (uint i = 0; i < _initialPCR0s.length; i++) {
             allowedPCR0[_initialPCR0s[i]] = true;
         }
+    }
+
+    // Only allow enclave save / backup key
+    function backupKey() external  onlyEnclave {
+        
     }
 
     /// Called once by factory, then UC is frozen
