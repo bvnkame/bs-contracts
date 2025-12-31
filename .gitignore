@@ -1,0 +1,11 @@
+/node_modules
+.openzeppelin/
+artifacts/
+cache/
+coverage*
+lib/
+typechain-types/
+abis/
+
+
+scripts/
