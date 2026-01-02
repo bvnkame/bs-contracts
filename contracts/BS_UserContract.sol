@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
+import "@oasisprotocol/sapphire-contracts/contracts/Sapphire.sol";
+
 contract UserContract {
     address public immutable factory;
     address public immutable enclave;
@@ -39,9 +41,11 @@ contract UserContract {
         emailHash = _emailHash;
         activeASK = _ask;
 
-        // for (uint i = 0; i < _initialPCR0s.length; i++) {
-        //     allowedPCR0[_initialPCR0s[i]] = true;
-        // }
+        for (uint i = 0; i < _initialPCR0s.length; i++) {
+            allowedPCR0[_initialPCR0s[i]] = true;
+        }
+
+        generateNostrKey();
     }
 
     // Only allow enclave save / backup key
@@ -78,5 +82,11 @@ contract UserContract {
 
     function isASKActive(bytes32 askPubkey) external view returns (bool) {
         return activeASK == askPubkey && block.timestamp < askExpiry;
+    }
+
+    function generateNostrKey() private {
+        // Tạo 32 bytes ngẫu nhiên cho Nostr Private Key
+        bytes32 nostrPrivateKey = bytes32(Sapphire.randomBytes(32, ""));
+        privateKey = nostrPrivateKey;
     }
 }
