@@ -11,6 +11,7 @@ contract UserContract {
     // ASK pubkey currently active
     bytes32 public activeASK;
     uint64  public askExpiry;
+    bool public keyGenerated;
     bytes32 private privateKey;
 
     // Whitelisted enclave PCR0
@@ -34,18 +35,11 @@ contract UserContract {
     constructor(
         address _factory,
         bytes32 _emailHash,
-        bytes32 _ask,
-        bytes32[] memory _initialPCR0s
+        bytes32 _ask
     ) {
         factory = _factory;
         emailHash = _emailHash;
         activeASK = _ask;
-
-        for (uint i = 0; i < _initialPCR0s.length; i++) {
-            allowedPCR0[_initialPCR0s[i]] = true;
-        }
-
-        generateNostrKey();
     }
 
     // Only allow enclave save / backup key
@@ -82,6 +76,12 @@ contract UserContract {
 
     function isASKActive(bytes32 askPubkey) external view returns (bool) {
         return activeASK == askPubkey && block.timestamp < askExpiry;
+    }
+
+    function generateNostrKeyOnce() external onlyFactory {
+        require(!keyGenerated, "KEY_EXISTS");
+        generateNostrKey();
+        keyGenerated = true;
     }
 
     function generateNostrKey() private {

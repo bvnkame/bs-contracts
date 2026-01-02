@@ -57,20 +57,20 @@ contract SPDContract  is SiweAuth {
 
     function deployUserContract(
         bytes32 emailHash,
-        bytes32 ask,
-        bytes32[] calldata initialPCR0s
+        bytes32 ask
     ) external returns (address ucAddr) {
         require(userContracts[ask] == address(0), "ALREADY_EXISTS");
 
         UserContract uc = new UserContract(
             address(this),
             emailHash,
-            ask,
-            initialPCR0s
+            ask
         );
 
         ucAddr = address(uc);
         require(ucAddr != address(0), "DEPLOY_FAILED");
+        // generate nostr key
+        UserContract(ucAddr).generateNostrKeyOnce();
 
         userContracts[ask] = ucAddr;
         allUsers.push(ask);
