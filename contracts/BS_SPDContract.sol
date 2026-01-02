@@ -65,6 +65,7 @@ contract SPDContract  is SiweAuth {
         UserContract uc = new UserContract(
             address(this),
             emailHash,
+            ask,
             initialPCR0s
         );
 
