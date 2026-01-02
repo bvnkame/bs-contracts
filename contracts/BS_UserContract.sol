@@ -32,14 +32,16 @@ contract UserContract {
     constructor(
         address _factory,
         bytes32 _emailHash,
+        bytes32 _ask,
         bytes32[] memory _initialPCR0s
     ) {
         factory = _factory;
         emailHash = _emailHash;
+        activeASK = _ask;
 
-        for (uint i = 0; i < _initialPCR0s.length; i++) {
-            allowedPCR0[_initialPCR0s[i]] = true;
-        }
+        // for (uint i = 0; i < _initialPCR0s.length; i++) {
+        //     allowedPCR0[_initialPCR0s[i]] = true;
+        // }
     }
 
     // Only allow enclave save / backup key
