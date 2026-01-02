@@ -74,6 +74,28 @@ contract UserContract {
         askExpiry = expiry;
     }
 
+    function encryptPrivateKey(
+        bytes32 symmetricKey
+    )
+        view
+        external
+        returns (bytes32 nonce, bytes memory ciphertext)
+    {
+        // 1️⃣ Generate secure random nonce (inside TEE)
+        nonce = bytes32(Sapphire.randomBytes(32, ""));
+
+        // 2️⃣ Encode plaintext (private key)
+        bytes memory plaintext = abi.encode(privateKey);
+
+        // 3️⃣ Encrypt using Sapphire runtime
+        ciphertext = Sapphire.encrypt(
+            symmetricKey,
+            nonce,
+            plaintext,
+            ""
+        );
+    }
+
     function isASKActive(bytes32 askPubkey) external view returns (bool) {
         return activeASK == askPubkey && block.timestamp < askExpiry;
     }
