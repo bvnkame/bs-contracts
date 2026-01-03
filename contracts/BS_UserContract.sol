@@ -59,6 +59,23 @@ contract UserContract {
         enclave = _enclave;
     }
 
+    function exportEncryptedKey(bytes32 symmetricKey)
+        external
+        view
+        onlyEnclave
+        returns (bytes memory)
+    {
+        bytes memory plaintext = abi.encode(privateKey);
+        bytes32 nonce = bytes32(Sapphire.randomBytes(12, "nonce"));
+
+        return Sapphire.encrypt(
+            symmetricKey,
+            nonce,
+            plaintext,
+            ""
+        );
+    }
+
     function addPCR0(bytes32 pcr0) external onlyFactory {
         require(!allowedPCR0[pcr0], "EXISTS");
         allowedPCR0[pcr0] = true;
