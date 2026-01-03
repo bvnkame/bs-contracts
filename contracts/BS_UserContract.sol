@@ -5,8 +5,9 @@ import "@oasisprotocol/sapphire-contracts/contracts/Sapphire.sol";
 
 contract UserContract {
     address public immutable factory;
-    address public immutable enclave;
     bytes32 public immutable emailHash;
+
+    address public enclave;
 
     // ASK pubkey currently active
     bytes32 public activeASK;
@@ -21,6 +22,7 @@ contract UserContract {
 
     event PCR0Added(bytes32 pcr0, address sender);
     event PCR0Removed(bytes32 pcr0, address sender);
+    event PrivateKeyGenerated(bytes32 keyHash);
 
     modifier onlyFactory() {
         require(msg.sender == factory, "NOT_FACTORY");
@@ -53,6 +55,10 @@ contract UserContract {
         initialized = true;
     }
 
+    function setEnclave(address _enclave) public onlyFactory {
+        enclave = _enclave;
+    }
+
     function addPCR0(bytes32 pcr0) external onlyFactory {
         require(!allowedPCR0[pcr0], "EXISTS");
         allowedPCR0[pcr0] = true;
@@ -79,21 +85,62 @@ contract UserContract {
     )
         view
         external
+        onlyEnclave
         returns (bytes32 nonce, bytes memory ciphertext)
     {
-        // 1️⃣ Generate secure random nonce (inside TEE)
-        nonce = bytes32(Sapphire.randomBytes(32, ""));
+        nonce = bytes32(Sapphire.randomBytes(12, "private_nonce_seed"));
 
-        // 2️⃣ Encode plaintext (private key)
         bytes memory plaintext = abi.encode(privateKey);
 
-        // 3️⃣ Encrypt using Sapphire runtime
         ciphertext = Sapphire.encrypt(
             symmetricKey,
             nonce,
             plaintext,
             ""
         );
+    }
+
+    function encryptPrivateKeyForEnclave(
+        Sapphire.Curve25519PublicKey enclavePubKey
+    )
+    external
+    view
+    onlyEnclave
+    returns (
+        Sapphire.Curve25519PublicKey ephemeralPubKey,
+        bytes32 nonce,
+        bytes memory ciphertext
+    )
+    {
+        // Generate ephemeral keypair
+        Sapphire.Curve25519PublicKey ephPk;
+        Sapphire.Curve25519SecretKey ephSk;
+
+        (ephPk, ephSk) =
+            Sapphire.generateCurve25519KeyPair(
+                bytes("ephemeral-encryption-key")
+            );
+
+        bytes32 sharedSecret = Sapphire.deriveSymmetricKey(
+            enclavePubKey, 
+            ephSk   
+        );
+
+        nonce = bytes32(
+            Sapphire.randomBytes(12, "private_key_nonce")
+        );
+
+        bytes memory plaintext = abi.encode(privateKey);
+
+        ciphertext = Sapphire.encrypt(
+            sharedSecret,
+            nonce,
+            plaintext,
+            ""
+        );
+
+        // 6. Return ephemeral public key for enclave to decrypt
+        ephemeralPubKey = ephPk;
     }
 
     function isASKActive(bytes32 askPubkey) external view returns (bool) {
@@ -104,6 +151,15 @@ contract UserContract {
         require(!keyGenerated, "KEY_EXISTS");
         generateNostrKey();
         keyGenerated = true;
+
+        bytes32 keyHash = keccak256(
+            abi.encodePacked(
+                "OASIS_SAPPHIRE_PRIVATE_KEY_V1",
+                privateKey
+            )
+        );
+
+        emit PrivateKeyGenerated(keyHash);
     }
 
     function generateNostrKey() private {
