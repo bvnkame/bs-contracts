@@ -7,6 +7,7 @@ contract UserContract {
     address public immutable factory;
     bytes32 public immutable emailHash;
 
+    address public enclaveSigner;   
     address public enclave;
 
     // ASK pubkey currently active
@@ -31,6 +32,19 @@ contract UserContract {
 
     modifier onlyEnclave() {
         require(msg.sender == enclave, "NOT_ENCLAVE");
+        _;
+    }
+
+    modifier onlyWithEnclaveSig(
+        address user,
+        bytes32 symmetricKeyHash,
+        uint256 nonce,
+        bytes calldata sig
+    ) {
+        require(
+            verifyEnclaveSignature(user, symmetricKeyHash, nonce, sig),
+            "INVALID_ENCLAVE_SIGNATURE"
+        );
         _;
     }
 
@@ -59,16 +73,40 @@ contract UserContract {
         enclave = _enclave;
     }
 
-    function exportEncryptedKey(bytes32 symmetricKey)
+    // function exportEncryptedKey(
+    //     address user,
+    //     bytes32 symmetricKey, 
+    //     bytes32 symmetricKeyHash,
+    //     uint256 nonce,
+    //     bytes calldata sig
+    // )
+    //     external
+    //     view
+    //     onlyWithEnclaveSig(user, symmetricKeyHash, nonce, sig)
+    //     returns (bytes memory)
+    // {
+    //     bytes memory plaintext = abi.encode(privateKey);
+    //     bytes32 nonce = bytes12(Sapphire.randomBytes(12, "nonce"));
+
+    //     return Sapphire.encrypt(
+    //         symmetricKey,
+    //         nonce,
+    //         plaintext,
+    //         ""
+    //     );
+    // }
+
+    function exportEncryptedKey(
+        bytes32 symmetricKey
+    )
         external
         view
-        onlyEnclave
-        returns (bytes memory)
+        returns (bytes12 nonce, bytes memory ciphertext)
     {
         bytes memory plaintext = abi.encode(privateKey);
-        bytes32 nonce = bytes32(Sapphire.randomBytes(12, "nonce"));
+        nonce = bytes12(Sapphire.randomBytes(12, "nonce"));
 
-        return Sapphire.encrypt(
+        ciphertext = Sapphire.encrypt(
             symmetricKey,
             nonce,
             plaintext,
@@ -97,69 +135,6 @@ contract UserContract {
         askExpiry = expiry;
     }
 
-    function encryptPrivateKey(
-        bytes32 symmetricKey
-    )
-        view
-        external
-        onlyEnclave
-        returns (bytes32 nonce, bytes memory ciphertext)
-    {
-        nonce = bytes32(Sapphire.randomBytes(12, "private_nonce_seed"));
-
-        bytes memory plaintext = abi.encode(privateKey);
-
-        ciphertext = Sapphire.encrypt(
-            symmetricKey,
-            nonce,
-            plaintext,
-            ""
-        );
-    }
-
-    function encryptPrivateKeyForEnclave(
-        Sapphire.Curve25519PublicKey enclavePubKey
-    )
-    external
-    view
-    onlyEnclave
-    returns (
-        Sapphire.Curve25519PublicKey ephemeralPubKey,
-        bytes32 nonce,
-        bytes memory ciphertext
-    )
-    {
-        // Generate ephemeral keypair
-        Sapphire.Curve25519PublicKey ephPk;
-        Sapphire.Curve25519SecretKey ephSk;
-
-        (ephPk, ephSk) =
-            Sapphire.generateCurve25519KeyPair(
-                bytes("ephemeral-encryption-key")
-            );
-
-        bytes32 sharedSecret = Sapphire.deriveSymmetricKey(
-            enclavePubKey, 
-            ephSk   
-        );
-
-        nonce = bytes32(
-            Sapphire.randomBytes(12, "private_key_nonce")
-        );
-
-        bytes memory plaintext = abi.encode(privateKey);
-
-        ciphertext = Sapphire.encrypt(
-            sharedSecret,
-            nonce,
-            plaintext,
-            ""
-        );
-
-        // 6. Return ephemeral public key for enclave to decrypt
-        ephemeralPubKey = ephPk;
-    }
-
     function isASKActive(bytes32 askPubkey) external view returns (bool) {
         return activeASK == askPubkey && block.timestamp < askExpiry;
     }
@@ -183,5 +158,39 @@ contract UserContract {
         // Tạo 32 bytes ngẫu nhiên cho Nostr Private Key
         bytes32 nostrPrivateKey = bytes32(Sapphire.randomBytes(32, ""));
         privateKey = nostrPrivateKey;
+    }
+
+    function verifyEnclaveSignature(
+        address user,
+        bytes32 symmetricKeyHash,
+        uint256 nonce,
+        bytes calldata signature
+    ) public view returns (bool) {
+        bytes32 digest = keccak256(
+            abi.encode(
+                address(this),
+                user,
+                symmetricKeyHash,
+                nonce,
+                block.chainid
+            )
+        );
+
+        // Ethereum signed message (khuyến nghị)
+        bytes32 ethHash = keccak256(
+            abi.encodePacked(
+                "\x19Ethereum Signed Message:\n32",
+                digest
+            )
+        );
+
+        address recovered = ecrecover(
+            ethHash,
+            uint8(signature[64]) + 27,
+            bytes32(signature[0:32]),
+            bytes32(signature[32:64])
+        );
+
+        return recovered == enclaveSigner;
     }
 }
