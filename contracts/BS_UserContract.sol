@@ -101,10 +101,10 @@ contract UserContract {
     )
         external
         view
-        returns (bytes15 nonce, bytes memory ciphertext)
+        returns (bytes32 nonce, bytes memory ciphertext)
     {
         bytes memory plaintext = abi.encode(privateKey);
-        nonce = bytes12(Sapphire.randomBytes(15, "nonce"));
+        nonce = bytes32(Sapphire.randomBytes(32, bytes("my-dapp-nonce")));
 
         ciphertext = Sapphire.encrypt(
             symmetricKey,
