@@ -193,4 +193,17 @@ contract UserContract {
 
         return recovered == enclaveSigner;
     }
+
+    function checkKeyHash(bytes32 expectedHash)
+        external
+        view
+        returns (bool)
+    {
+        // Hash private key bên trong enclave
+        bytes32 actualHash = keccak256(
+            abi.encodePacked(privateKey)
+        );
+
+        return actualHash == expectedHash;
+    }
 }
